@@ -1,0 +1,22 @@
+[package]
+name = "azure_web_push_rs"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[dependencies]
+hmac = { version = "*" }
+axum = "0.7.7"
+reqwest = { version = "*", features = ["json"] }
+serde = { version = "1.0.210", features = ["derive"] }
+tokio = { version = "1.40.0", features = ["full"] }
+tracing = { version = "0.1.40" }
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+sha2 = { version = "*" }
+base64 = { version = "*" }
+urlencoding = { version = "*" }
+tower-http = { version = "*", features = ["cors", "fs"] }
+web-push = "0.10.2"
+serde_json = "1.0.128"
+axum-macros = { version = "0.4.1", default-features = false, optional = false, features = [
+] }

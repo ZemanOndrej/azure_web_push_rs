@@ -1,0 +1,58 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug unit tests in library 'azure_web_push_rs'",
+			"cargo": {
+				"args": ["test", "--no-run", "--lib", "--package=azure_web_push_rs"],
+				"filter": {
+					"name": "azure_web_push_rs",
+					"kind": "lib"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug",
+			"cargo": {
+				"args": ["build", "--bin=azure_web_push_rs", "--package=azure_web_push_rs"],
+				"filter": {
+					"name": "azure_web_push_rs",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}",
+			"env": {
+				"RUST_LOG": "web_push::client=trace"
+			}
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug unit tests in executable 'azure_web_push_rs'",
+			"cargo": {
+				"args": [
+					"test",
+					"--no-run",
+					"--bin=azure_web_push_rs",
+					"--package=azure_web_push_rs"
+				],
+				"filter": {
+					"name": "azure_web_push_rs",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		}
+	]
+}
