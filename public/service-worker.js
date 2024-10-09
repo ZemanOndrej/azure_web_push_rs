@@ -1,6 +1,7 @@
 
 
 self.addEventListener('push', function (event) {
+	self.console.log('Push received');
 	const data = event.data.json();
 	const options = {
 		body: data.body,
@@ -10,5 +11,4 @@ self.addEventListener('push', function (event) {
 	event.waitUntil(
 		self.registration.showNotification(data.title, options)
 	);
-	self.console.log('Push received');
 });

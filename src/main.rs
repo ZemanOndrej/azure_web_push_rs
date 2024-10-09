@@ -1,16 +1,17 @@
-use std::{
-    collections::HashMap,
-    sync::{Arc, RwLock},
-};
-
 use axum::{
     routing::{get, post},
     Router,
 };
 use azure_web_push_rs::*;
-use reqwest::Client;
-use tower_http::cors::{Any, CorsLayer};
+use std::{
+    collections::HashMap,
+    sync::{Arc, RwLock},
+};
 use tower_http::services::ServeDir;
+use tower_http::{
+    cors::{Any, CorsLayer},
+    services::ServeFile,
+};
 
 #[tokio::main]
 async fn main() {
@@ -24,17 +25,19 @@ async fn main() {
     let state = AppState {
         registrations: HashMap::new(),
     };
-
-    // build our application with a route
-    let app = Router::new()
-        .route("/", get(root))
+    let api_router = Router::new()
         .route("/registration", post(dw::post_registration))
         .route("/registrations", get(dw::get_registrations))
         .route("/notification", post(dw::post_notification))
         // Azure routes
         .route("/azure/registrations", get(azure::get_registrations))
         .route("/azure/register", post(azure::register))
-        .route("/azure/notification", post(azure::push_notification))
+        .route("/azure/notification", post(azure::push_notification));
+
+    // build our application with a route
+    let app = Router::new()
+        .nest("/api", api_router)
+        .nest_service("/", ServeFile::new("public/index.html"))
         .nest_service("/public", ServeDir::new("public"))
         .layer(cors)
         .with_state(Arc::from(RwLock::new(state)));
@@ -46,15 +49,4 @@ async fn main() {
         listener.local_addr().unwrap().to_string().as_str()
     );
     axum::serve(listener, app).await.unwrap();
-}
-// basic handler that responds with a static string
-async fn root() -> String {
-    let client = Client::new();
-    let url = format!("https://jsonplaceholder.typicode.com/todos/{}", 1);
-
-    let response = client.get(&url).send().await.unwrap();
-    let body = response.text().await.unwrap().to_string();
-    println!("body: {}", body);
-
-    body
 }

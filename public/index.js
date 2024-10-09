@@ -1,12 +1,8 @@
-
-
-
 async function handleSendNotificationClick() {
 	console.log('send notification');
 
 	try {
-
-		let result = await fetch('http://localhost:3000/notification', {
+		let result = await fetch('/api/notification', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -14,20 +10,18 @@ async function handleSendNotificationClick() {
 		});
 		let body = await result.json();
 
-
 		console.log('Notification sent:', body);
 		resultDiv.innerHTML = JSON.stringify(body);
 	} catch (error) {
 		console.log('Notification sent:', error);
 		resultDiv.innerHTML = JSON.stringify(error);
 	}
-
 }
 
 async function handleGetRegistrations() {
 	console.log('get registrations');
 	try {
-		let result = await fetch('http://localhost:3000/registrations', {
+		let result = await fetch('/api/registrations', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -39,12 +33,7 @@ async function handleGetRegistrations() {
 		resultDiv.innerHTML = JSON.stringify(body);
 	} catch (error) {
 		resultDiv.innerHTML = JSON.stringify(error);
-
 	}
-
-
-
-
 }
 
 document.getElementById('send_notification').addEventListener('click', handleSendNotificationClick);
