@@ -36,8 +36,10 @@ pub async fn post_notification(
             .map_err(handle_error)?;
 
         let mut builder = WebPushMessageBuilder::new(&subscription_info);
-        let content = "Encrypted payload to be sent in the notification".as_bytes();
-        builder.set_payload(ContentEncoding::Aes128Gcm, content);
+        let content =
+            json!({"body": "Encrypted payload to be sent in the notification", "title":"hi from rust"})
+                .to_string();
+        builder.set_payload(ContentEncoding::Aes128Gcm, content.as_bytes());
         builder.set_vapid_signature(sig_builder);
 
         let client = IsahcWebPushClient::new().map_err(handle_error)?;
