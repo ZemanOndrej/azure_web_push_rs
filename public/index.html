@@ -66,13 +66,16 @@
 				console.log('User is subscribed:', subscription);
 
 				// Send subscription to your server
-				await fetch('/api/registration', {
+				let res = await fetch('/api/registration', {
 					method: 'POST',
 					body: JSON.stringify(subscription),
 					headers: {
 						'Content-Type': 'application/json'
 					}
 				});
+				let body = await res.text();
+				document.getElementById('text_response_field').innerText = JSON.stringify(body, null, 2);
+
 			} catch (error) {
 				console.error('Service Worker Error', error);
 			}
@@ -81,7 +84,9 @@
 
 	<button id="send_notification">send notification</button>
 	<button id="btn_get_registrations">get registrations</button>
-	<div style="height: 500px; background-color: azure" id="text_response_field"></div>
+	<div style="height: 500px; background-color: azure; white-space: pre; width: fit-content; min-width: 100vw"
+		id="text_response_field">
+	</div>
 	<script src="./public/index.js" defer></script>
 </body>
 

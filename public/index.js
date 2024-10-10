@@ -11,10 +11,10 @@ async function handleSendNotificationClick() {
 		let body = await result.json();
 
 		console.log('Notification sent:', body);
-		resultDiv.innerHTML = JSON.stringify(body);
+		resultDiv.innerHTML = JSON.stringify(body, null, 2);
 	} catch (error) {
 		console.log('Notification sent:', error);
-		resultDiv.innerHTML = JSON.stringify(error);
+		resultDiv.innerHTML = JSON.stringify(error, null, 2);
 	}
 }
 
@@ -30,9 +30,9 @@ async function handleGetRegistrations() {
 
 		let body = await result.json();
 		console.log('registrations :', body);
-		resultDiv.innerHTML = JSON.stringify(body);
+		resultDiv.innerHTML = JSON.stringify(body, null, 2);
 	} catch (error) {
-		resultDiv.innerHTML = JSON.stringify(error);
+		resultDiv.innerHTML = JSON.stringify(error, null, 2);
 	}
 }
 
