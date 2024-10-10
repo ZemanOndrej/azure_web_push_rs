@@ -33,8 +33,7 @@
 			}
 		}
 		async function getPNSSubscription() {
-			const publicVapidKey =
-				'BG8BNxzutVBk_n8yFG6S1U73F5qUpJZVk5d_AP4IvVi4OV2LL4q7sBJ_aey7Tn2_vSznq_3I2ewGdhOsrU_wTdk=';
+			const publicVapidKey = await fetch('/public/public.key').then((res) => res.text());
 
 			const registration = await navigator.serviceWorker.register(
 				'./public/service-worker.js'
